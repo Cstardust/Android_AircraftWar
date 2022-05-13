@@ -130,7 +130,7 @@ public class GameView extends SurfaceView
         //  初始化 各种飞机集合
         //  英雄机
         int heroHp = 500;
-        int heroPower = 30;
+        int heroPower = 100;
         int heroNum = 1;
         heroAircraft = HeroAircraft.getHeroAircraft(GameView.screenWidth / 2, GameView.screenHeight-ImageManager.HERO_IMAGE.getHeight() ,
                 0, 0, heroHp,heroPower,-1,heroNum);
@@ -301,7 +301,10 @@ public class GameView extends SurfaceView
                 enemyAircrafts.add(new EliteEnemyFactory().createAircraft(80,5,13,2));
             }
         }
+        System.out.println("Before");
         if(isBoss()){
+            System.out.println("cntBoss " + cntBoss);
+            System.out.println("isBoss true");
             if(enemyAircrafts.size()<enemyMaxNumber){
                 Log.d("Boss","biu biu");
                 enemyAircrafts.add(new BossEnemyFactory().createAircraft(bossHp,bosssX,bosssY,bossNum));
@@ -338,7 +341,6 @@ public class GameView extends SurfaceView
     private void crashCheckAction() {
         // TODO 敌机子弹攻击英雄
         for (BaseBullet bullet : enemyBullets) {
-            System.out.println("bullet : "+bullet);
             if (bullet.notValid()) {
                 continue;
             }
@@ -366,6 +368,9 @@ public class GameView extends SurfaceView
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
+                        if(enemyAircraft instanceof BossEnemy){
+                            --cntBoss;
+                        }
                         // TODO 获得分数，产生道具补给  交给大哥了！
                         score += 10;
                     }
@@ -373,6 +378,7 @@ public class GameView extends SurfaceView
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
                     enemyAircraft.vanish();
+
                     heroAircraft.decreaseHp(Integer.MAX_VALUE);
                 }
             }
@@ -471,6 +477,7 @@ public class GameView extends SurfaceView
 
     protected boolean isBoss()
     {
+        System.out.println("cntBoss " + cntBoss);
         //  同一时刻只有一个Boss机
         if(cntBoss>=bossLimit) {
             return false;

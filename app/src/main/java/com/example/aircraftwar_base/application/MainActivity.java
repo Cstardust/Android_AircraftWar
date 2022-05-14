@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.aircraftwar_base.R;
 
@@ -18,12 +20,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button bt = (Button) findViewById(R.id.btn);  //对Button 进行实例化
 
-        //  替换出游戏主界面
+//        //  替换出游戏主界面
+//        getScreenHW();
+//        mGameView = new GameView(this);
+//        setContentView(mGameView);
+    }
+
+    public void showGameView(View v)
+    {
         getScreenHW();
         mGameView = new GameView(this);
         setContentView(mGameView);
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

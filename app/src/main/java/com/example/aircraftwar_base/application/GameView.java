@@ -57,7 +57,7 @@ public class GameView extends SurfaceView
 
 //  游戏数据相关
     //  成绩
-    private int score;
+    private int score = 50;
     //  飞机集合
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
@@ -74,11 +74,11 @@ public class GameView extends SurfaceView
     protected int bossNum = 1;
     protected int bosssX = 2;
     protected int bosssY = 0;
-    protected int bossHp = 300;
+    protected int bossHp = 10000;
     //  Boss计数：用于计算boss什么时候出现。
     protected int cntBoss = 0;
     protected int recordOfBoss = 0;
-    protected int bossThreshold = 100;  //  的多少分时出现
+    protected int bossThreshold = 50;  //  的多少分时出现
 
     //   子弹计时器
     protected Map<String,Double> shootCycle = new LinkedHashMap<String,Double>(){
@@ -108,8 +108,8 @@ public class GameView extends SurfaceView
     //  各个飞机飞行周期
     protected Map<String,Double> airDuration = new LinkedHashMap<String,Double>(){
         {
-            put("normal",500.0);
-            put("elite",1200.0);
+            put("normal",1000.0);
+            put("elite",2000.0);
         }
     };
 
@@ -129,8 +129,8 @@ public class GameView extends SurfaceView
 
         //  初始化 各种飞机集合
         //  英雄机
-        int heroHp = 500;
-        int heroPower = 100;
+        int heroHp = 50000;
+        int heroPower = 5;
         int heroNum = 1;
         heroAircraft = HeroAircraft.getHeroAircraft(GameView.screenWidth / 2, GameView.screenHeight-ImageManager.HERO_IMAGE.getHeight() ,
                 0, 0, heroHp,heroPower,-1,heroNum);
@@ -298,15 +298,11 @@ public class GameView extends SurfaceView
         {
             // 新敌机产生
             if (enemyAircrafts.size() < enemyMaxNumber) {
-                enemyAircrafts.add(new EliteEnemyFactory().createAircraft(80,5,13,2));
+                enemyAircrafts.add(new EliteEnemyFactory().createAircraft(80,0,13,2));
             }
         }
-        System.out.println("Before");
         if(isBoss()){
-            System.out.println("cntBoss " + cntBoss);
-            System.out.println("isBoss true");
             if(enemyAircrafts.size()<enemyMaxNumber){
-                Log.d("Boss","biu biu");
                 enemyAircrafts.add(new BossEnemyFactory().createAircraft(bossHp,bosssX,bosssY,bossNum));
             }
         }
@@ -378,7 +374,6 @@ public class GameView extends SurfaceView
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
                     enemyAircraft.vanish();
-
                     heroAircraft.decreaseHp(Integer.MAX_VALUE);
                 }
             }
@@ -447,14 +442,8 @@ public class GameView extends SurfaceView
     //  判断游戏是否结束
     public void isEnd()
     {
-//        totalTime += airInterval; totalTime 总计时间 用于难度升级
         if (heroAircraft.getHp() <= 0) {
             surfaceDestroyed(mSurfaceHolder);
-            // 游戏结束 bgm停止；结束音乐开始
-//            if (MusicThread.getIsMusic()) {
-//                MusicThread.setIsEnd(true);
-//                new MusicThread("src/videos/game_over.wav", false, true).start();
-//            }
             System.out.println("Game Over!");
         }
     }
@@ -477,7 +466,6 @@ public class GameView extends SurfaceView
 
     protected boolean isBoss()
     {
-        System.out.println("cntBoss " + cntBoss);
         //  同一时刻只有一个Boss机
         if(cntBoss>=bossLimit) {
             return false;

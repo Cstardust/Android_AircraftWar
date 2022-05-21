@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.example.aircraftwar_base.R;
 
@@ -16,19 +18,32 @@ import com.example.aircraftwar_base.R;
 public class MainActivity extends AppCompatActivity {
     public String TAG = "我恨安卓";
     private GameView mGameView;
+    private static boolean isMusic;     //  游戏是否有音乐
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button bt = (Button) findViewById(R.id.btn);  //对Button 进行实例化
 
-//        //  替换出游戏主界面
-//        getScreenHW();
-//        mGameView = new GameView(this);
-//        setContentView(mGameView);
+        Switch sw = (Switch)findViewById(R.id.switch1);
+        //  添加监听
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+              @Override
+              public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        isMusic = true;
+                    }else{
+                        isMusic = false;
+                    }
+                  System.out.println("isMusic " + isMusic);
+              }
+            }
+        );
     }
 
-    public void showGameView(View v)
+
+
+    public void showEasyGameView(View v)
     {
         getScreenHW();
         mGameView = new GameView(this);
@@ -36,13 +51,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            this.finish();
-        }
-        return true;
+    public void showMediumGameView(View v)
+    {
+        getScreenHW();
+        mGameView = new GameView(this);
+        setContentView(mGameView);
     }
+
+    public void showHardGameView(View v)
+    {
+        getScreenHW();
+        mGameView = new GameView(this);
+        setContentView(mGameView);
+    }
+
 
     //  获取界面的长、宽
     public void getScreenHW()
@@ -59,5 +81,9 @@ public class MainActivity extends AppCompatActivity {
         //  窗口高度
         GameView.screenHeight = dm.heightPixels;
         Log.i(TAG,"screenHeight : "+GameView.screenHeight);
+    }
+
+    public boolean getIsMusic(){
+        return isMusic;
     }
 }

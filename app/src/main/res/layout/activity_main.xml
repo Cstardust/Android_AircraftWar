@@ -11,11 +11,45 @@
         android:id="@+id/btn"
         android:layout_width="103dp"
         android:layout_height="63dp"
-        android:layout_marginTop="296dp"
-        android:layout_marginEnd="152dp"
-        android:onClick="showGameView"
-        android:text="Button"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="164dp"
+        android:onClick="showEasyGameView"
+        android:text="Easy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn02"
+        android:layout_width="103dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="164dp"
+        android:onClick="showMediumGameView"
+        android:text="Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn" />
+
+    <Button
+        android:id="@+id/btn03"
+        android:layout_width="103dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="164dp"
+        android:onClick="showHardGameView"
+        android:text="HARD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn02" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="103dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="164dp"
+        android:rotationX="7"
+        android:text="Music"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn03" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,12 +34,8 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public void vanish() {
-//        if(mt!=null)
-//        {
-//            mt.setIsLoop(false);
-//            mt.setLapse(true);
-//        }
         isValid = false;
+        System.out.println("BOSS " + isValid);
     }
 
 }

@@ -4,6 +4,8 @@ package com.example.aircraftwar_base.basic;
 import android.graphics.Bitmap;
 
 import com.example.aircraftwar_base.aircraft.AbstractAircraft;
+import com.example.aircraftwar_base.aircraft.BossEnemy;
+import com.example.aircraftwar_base.aircraft.HeroAircraft;
 import com.example.aircraftwar_base.application.GameView;
 import com.example.aircraftwar_base.application.ImageManager;
 
@@ -110,10 +112,17 @@ public abstract class AbstractFlyingObject {
         int fWidth = flyingObject.getWidth();
         int fHeight = flyingObject.getHeight();
 
+        if(this instanceof BossEnemy && flyingObject instanceof HeroAircraft){
+            return  x + (fWidth+this.getWidth())/2 > locationX
+                    && x - (fWidth+this.getWidth())/2 < locationX
+                    && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY + this.getImage().getHeight()
+                    && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY+ this.getImage().getHeight();
+        }
+
         return x + (fWidth+this.getWidth())/2 > locationX
                 && x - (fWidth+this.getWidth())/2 < locationX
-                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY
-                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY;
+                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY + flyingObject.getImage().getHeight()/2
+                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY + flyingObject.getImage().getHeight()/2;
     }
 
     public int getLocationX() {

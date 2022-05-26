@@ -45,11 +45,11 @@ public class StraightShoot implements ShootStrategy{
             BaseBullet abstractBullet = null;
             if(air instanceof HeroAircraft)
             {
-                abstractBullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+                abstractBullet = new HeroBullet(x + (i*2 - shootNum + 1)*20, y, speedX, speedY, power);
             }
             else if(air instanceof EliteEnemy)
             {
-                abstractBullet = new EnemyBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+                abstractBullet = new EnemyBullet(x + (i*2 - shootNum + 1)*20, y, speedX, speedY, power);
             }
             else
             {

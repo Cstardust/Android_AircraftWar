@@ -9,7 +9,6 @@ import com.example.aircraftwar_base.reward.AbstractReward;
  */
 public class BloodReward extends AbstractReward {
     private int adds = 80;
-    @Override
     public void takeEffect(HeroAircraft heroAircraft) {
         heroAircraft.addHp(adds);
     }

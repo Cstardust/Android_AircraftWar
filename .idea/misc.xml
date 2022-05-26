@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Code/Android/AircraftWarbase/app/src/main/res/layout/activity_inputname.xml" value="0.1" />
         <entry key="..\:/Code/Android/AircraftWarbase/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Code/Android/AircraftWarbase/app/src/main/res/layout/activity_rank.xml" value="0.1105072463768116" />
         <entry key="..\:/Code/Android/AircraftWarbase/app/src/main/res/layout/game.xml" value="0.25226449275362317" />
         <entry key="..\:/Code/Android/AircraftWarbase/app/src/main/res/layout/table.xml" value="0.1" />
       </map>

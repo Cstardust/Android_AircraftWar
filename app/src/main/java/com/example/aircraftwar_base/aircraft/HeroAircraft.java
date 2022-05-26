@@ -62,5 +62,12 @@ public class HeroAircraft extends AbstractAircraft {
     {
         hp += x;
     }
+    public void addPower(int x){
+        power+=x;
+    }
+    public int getNum(){return shootNum;}
+    public void addNum(int x){
+        shootNum += x;
+    }
 
 }

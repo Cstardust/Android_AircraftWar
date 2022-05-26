@@ -2,6 +2,10 @@ package com.example.aircraftwar_base.aircraft;
 
 import com.example.aircraftwar_base.application.GameView;
 import com.example.aircraftwar_base.bullet.BaseBullet;
+import com.example.aircraftwar_base.reward.BloodFactory;
+import com.example.aircraftwar_base.reward.BombFactory;
+import com.example.aircraftwar_base.reward.BulletFactory;
+import com.example.aircraftwar_base.reward.PropCreator;
 import com.example.aircraftwar_base.shootStrategy.MyContext;
 import com.example.aircraftwar_base.shootStrategy.ShootStrategy;
 import com.example.aircraftwar_base.shootStrategy.StraightShoot;
@@ -37,4 +41,27 @@ public class EliteEnemy extends AbstractAircraft{
         return c.executeStrategy(this);
     }
 
+    public void fallProp(List prop,AbstractAircraft abstractAircraft) {
+        PropCreator propCreator = new PropCreator();
+        switch ((int) (Math.random() *3)) {
+            case 0:
+                BloodFactory bloodFactory = new BloodFactory();
+                propCreator.setPropFactory(bloodFactory);
+                prop.add(propCreator.getProp(abstractAircraft));
+                break;
+
+            case 1:
+                BombFactory bombFactory = new BombFactory();
+                propCreator.setPropFactory(bombFactory);
+                prop.add(propCreator.getProp(abstractAircraft));
+                break;
+            case 2:
+                BulletFactory bulletFactory = new BulletFactory();
+                propCreator.setPropFactory(bulletFactory);
+                prop.add(propCreator.getProp(abstractAircraft));
+                break;
+            default:
+                break;
+        }
+    }
 }

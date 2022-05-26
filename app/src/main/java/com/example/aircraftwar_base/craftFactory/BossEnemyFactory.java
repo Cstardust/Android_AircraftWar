@@ -9,7 +9,7 @@ public class BossEnemyFactory extends BaseCraftFactory {
     @Override
     public AbstractAircraft createAircraft(int hp, int speedX, int speedY, int shootNum) {
         direction = 1;
-        val = 200;
+        val = 90;
         power = 35;
         return new BossEnemy(locationX,locationY,speedX,speedY,hp,power,direction,val,shootNum);
     }

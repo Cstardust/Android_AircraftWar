@@ -5,51 +5,52 @@
     android:id="@+id/slv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".application.MainActivity">
-
+    android:background="@drawable/bg7"
+    tools:context=".activity.MainActivity">
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn1"
         android:layout_width="103dp"
         android:layout_height="63dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="148dp"
         android:onClick="showEasyGameView"
-        android:text="Easy"
+        android:text="EASY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn02"
+        android:id="@+id/btn2"
         android:layout_width="103dp"
         android:layout_height="67dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="148dp"
         android:onClick="showMediumGameView"
         android:text="Medium"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn" />
+        app:layout_constraintTop_toBottomOf="@+id/btn1" />
 
     <Button
-        android:id="@+id/btn03"
+        android:id="@+id/btn3"
         android:layout_width="103dp"
         android:layout_height="67dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginTop="284dp"
+        android:layout_marginEnd="148dp"
         android:onClick="showHardGameView"
         android:text="HARD"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn02" />
+        app:layout_constraintTop_toBottomOf="@+id/btn1" />
 
     <Switch
         android:id="@+id/switch1"
         android:layout_width="103dp"
         android:layout_height="52dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginTop="408dp"
+        android:layout_marginEnd="148dp"
         android:rotationX="7"
         android:text="Music"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn03" />
+        app:layout_constraintTop_toBottomOf="@+id/btn1" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

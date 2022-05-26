@@ -45,11 +45,11 @@ public class ScatteredShoot implements ShootStrategy{
             BaseBullet abstractBullet = null;
             if(air instanceof HeroAircraft)
             {
-                abstractBullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX+dx[i%3], speedY, power);
+                abstractBullet = new HeroBullet(x + (i*2 - shootNum + 1)*20, y, speedX+dx[i%3], speedY, power);
             }
             else if(air instanceof BossEnemy || air instanceof EliteEnemy)
             {
-                abstractBullet = new EnemyBullet(x + (i*2 - shootNum + 1)*10, y, speedX+dx[i%3], speedY, power);
+                abstractBullet = new EnemyBullet(x + (i*2 - shootNum + 1)*20, y, speedX+dx[i%3], speedY, power);
             }else{
                 Log.d("ScatteredShoot","sth else happened");
             }

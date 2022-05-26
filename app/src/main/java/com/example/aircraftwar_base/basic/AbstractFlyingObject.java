@@ -7,7 +7,7 @@ import com.example.aircraftwar_base.aircraft.AbstractAircraft;
 import com.example.aircraftwar_base.aircraft.BossEnemy;
 import com.example.aircraftwar_base.aircraft.HeroAircraft;
 import com.example.aircraftwar_base.application.GameView;
-import com.example.aircraftwar_base.application.ImageManager;
+import com.example.aircraftwar_base.controller.ImageManager;
 
 
 /**
@@ -121,8 +121,8 @@ public abstract class AbstractFlyingObject {
 
         return x + (fWidth+this.getWidth())/2 > locationX
                 && x - (fWidth+this.getWidth())/2 < locationX
-                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY + flyingObject.getImage().getHeight()/2
-                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY + flyingObject.getImage().getHeight()/2;
+                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY + flyingObject.getImage().getHeight()/5
+                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY + flyingObject.getImage().getHeight()/5;
     }
 
     public int getLocationX() {

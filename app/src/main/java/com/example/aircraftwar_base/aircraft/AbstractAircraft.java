@@ -62,6 +62,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     public int getDirection(){
         return direction;
     }
+    public int getVal(){return val;}
 }
 
 

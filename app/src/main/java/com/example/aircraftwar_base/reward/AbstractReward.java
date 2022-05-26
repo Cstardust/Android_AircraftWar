@@ -13,7 +13,7 @@ import com.example.aircraftwar_base.basic.AbstractFlyingObject;
 public abstract class AbstractReward extends AbstractFlyingObject {
 
     //  道具作用
-    public abstract void takeEffect(HeroAircraft heroAircraft);
+    // public abstract void takeEffect(HeroAircraft heroAircraft);
 
     public AbstractReward(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);

@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aircraftwar_base.R;
 import com.example.aircraftwar_base.application.GameView;
-import com.example.aircraftwar_base.rank.ScoreDaoIm;
+import com.example.aircraftwar_base.rank.PlayerDaoIm;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,8 +22,8 @@ import java.util.Date;
 public class scoreActivity extends AppCompatActivity {
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.WRAP_CONTENT;
-    public static final SimpleDateFormat sml = new SimpleDateFormat("MM-dd kk:mm");
-    public ScoreDaoIm scoreDaoIm;
+    private SimpleDateFormat sml = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+    public PlayerDaoIm scoreDaoIm;
     public String stringDate;
 
     @Override
@@ -32,14 +32,13 @@ public class scoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rank);
         MainActivity.activityList.add(this);
         if (MainActivity.choose == 1)
-            scoreDaoIm = new ScoreDaoIm("easy.txt");
+            scoreDaoIm = new PlayerDaoIm("easy.txt");
         if (MainActivity.choose == 2)
-            scoreDaoIm = new ScoreDaoIm("common.txt");
+            scoreDaoIm = new PlayerDaoIm("common.txt");
         if (MainActivity.choose == 3)
-            scoreDaoIm = new ScoreDaoIm("hard.txt");
+            scoreDaoIm = new PlayerDaoIm("hard.txt");
         stringDate = sml.format(new Date());
         scoreDaoIm.addRecord(GameView.score, inputActivity.editText.getText().toString(), stringDate);
-
         createTable();
     }
 
@@ -84,6 +83,7 @@ public class scoreActivity extends AppCompatActivity {
     {
         exit();
     }
+
 
 
 }

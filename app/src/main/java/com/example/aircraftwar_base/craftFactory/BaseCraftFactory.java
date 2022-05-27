@@ -11,7 +11,7 @@ public abstract class BaseCraftFactory {
     //  createAircraft 的参数 是用户可以自定义的
     //  如果想交给用户，那么再改工厂的接口即可。
     protected int locationX = (int) ( Math.random() * (GameView.screenWidth - ImageManager.MOB_ENEMY_IMAGE.getWidth()))*1;
-    protected int locationY = (int) (Math.random() * GameView.screenHeight * 0.2)*1+60;
+    protected int locationY = (int) (Math.random() * GameView.screenHeight * 0.2)*1-80;
     protected int direction ;
     protected int val;          //  击落得分
     protected int power ;

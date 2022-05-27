@@ -85,6 +85,9 @@ public class HardGame extends GameView {
             System.out.println();
             if(enemyAircrafts.size()<enemyMaxNumber){
                 enemyAircrafts.add(new BossEnemyFactory().createAircraft(bossHp,bosssX,bosssY,bossNum));
+                if(isIsmusicON()){
+                    bossBgm.start();
+                }
             }
         }
     }

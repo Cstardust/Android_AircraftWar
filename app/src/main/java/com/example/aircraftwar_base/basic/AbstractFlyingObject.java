@@ -8,6 +8,7 @@ import com.example.aircraftwar_base.aircraft.BossEnemy;
 import com.example.aircraftwar_base.aircraft.HeroAircraft;
 import com.example.aircraftwar_base.application.GameView;
 import com.example.aircraftwar_base.controller.ImageManager;
+import com.example.aircraftwar_base.reward.AbstractReward;
 
 
 /**
@@ -119,10 +120,16 @@ public abstract class AbstractFlyingObject {
                     && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY+ this.getImage().getHeight();
         }
 
+        if(this instanceof AbstractReward){
+            return x + (fWidth+this.getWidth())/2 > locationX
+                    && x - (fWidth+this.getWidth())/2 < locationX
+                    && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY + flyingObject.getImage().getHeight()/5
+                    && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY + flyingObject.getImage().getHeight()/5;
+        }
         return x + (fWidth+this.getWidth())/2 > locationX
                 && x - (fWidth+this.getWidth())/2 < locationX
-                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY + flyingObject.getImage().getHeight()/5
-                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY + flyingObject.getImage().getHeight()/5;
+                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY + flyingObject.getImage().getHeight()/10
+                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY+ flyingObject.getImage().getHeight()/10;
     }
 
     public int getLocationX() {

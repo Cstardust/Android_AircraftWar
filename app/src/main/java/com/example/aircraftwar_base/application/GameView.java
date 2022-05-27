@@ -60,6 +60,8 @@ public abstract class GameView extends SurfaceView
     private SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  //  绘图的画布
     private Paint mPaint;   //  画笔
+
+
     private boolean ismusicON = MainActivity.getIsMusic();
 
 
@@ -69,7 +71,8 @@ public abstract class GameView extends SurfaceView
     private MediaPlayer bullet_acc = MediaPlayer.create(this.getContext(), R.raw.bullet);
     private MediaPlayer bullet_hit = MediaPlayer.create(this.getContext(), R.raw.bullet_hit);
     private MediaPlayer getProp = MediaPlayer.create(this.getContext(), R.raw.get_supply);
-    private MediaPlayer bossBgm = MediaPlayer.create(this.getContext(), R.raw.bgm_boss);
+    protected MediaPlayer bossBgm = MediaPlayer.create(this.getContext(), R.raw.bgm_boss);
+    private MediaPlayer bombBgm = MediaPlayer.create(this.getContext(), R.raw.bomb_explosion);
 
     //  游戏数据相关
     //  成绩
@@ -153,7 +156,7 @@ public abstract class GameView extends SurfaceView
         initArgs();
         //  英雄机
         int heroHp = 1000;
-        int heroPower = 20;
+        int heroPower = 50;
         int heroNum = 1;
         heroAircraft = HeroAircraft.getHeroAircraft(GameView.screenWidth / 2, GameView.screenHeight- ImageManager.HERO_IMAGE.getHeight() ,
                 0, 0, heroHp,heroPower,-1,heroNum);
@@ -349,6 +352,7 @@ public abstract class GameView extends SurfaceView
     }
 
 
+
     private void bulletsMoveAction() {
         for (BaseBullet bullet : heroBullets) {
             bullet.forward();
@@ -404,6 +408,9 @@ public abstract class GameView extends SurfaceView
                     if (enemyAircraft.notValid()) {
                         if(enemyAircraft instanceof BossEnemy){
                             --cntBoss;
+                            if(ismusicON){
+                                bossBgm.stop();
+                            }
                         }
                         // TODO 获得分数，产生道具补给  交给大哥了！
                         if (enemyAircraft instanceof EliteEnemy) {
@@ -441,7 +448,9 @@ public abstract class GameView extends SurfaceView
                 else if (myProp instanceof BombReward) {
                     ((BombReward) myProp).takeEffect(enemyAircrafts,enemyBullets);
                     myProp.vanish();
-
+                    if(ismusicON) {
+                        bombBgm.start();
+                    }
                 }
 
                 //火力增强道具，每一个道具可增加英雄机一发子弹，最多可增加4发子弹
@@ -542,6 +551,9 @@ public abstract class GameView extends SurfaceView
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
         mbLoop = false;
+    }
+    public boolean isIsmusicON() {
+        return ismusicON;
     }
 
 }

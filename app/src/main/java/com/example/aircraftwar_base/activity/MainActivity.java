@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private static boolean isMusic;     //  游戏是否有音乐
     private static Thread t = null;
     public static File fileDir= null;
-    public Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
         Switch sw = (Switch)findViewById(R.id.switch1);
         //  添加监听
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                          @Override
-                                          public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                              if(isChecked){
-                                                  isMusic = true;
-                                              }else{
-                                                  isMusic = false;
-                                              }
-                                              System.out.println("isMusic " + isMusic);
-                                          }
-                                      }
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    isMusic = true;
+                }else{
+                    isMusic = false;
+                }
+                System.out.println("isMusic " + isMusic);
+            }
+        }
         );
     }
 

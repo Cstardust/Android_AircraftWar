@@ -22,7 +22,7 @@ public class MediumGame extends GameView{
 
     @Override
     protected void loadBG() {
-        ImageManager.BACKGROUND_IMAGE = BitmapFactory.decodeResource(getResources(), R.drawable.bg2);
+        ImageManager.BACKGROUND_IMAGE = BitmapFactory.decodeResource(getResources(), R.drawable.bg4);
     }
     @Override
     protected void initArgs(){
@@ -80,6 +80,9 @@ public class MediumGame extends GameView{
         if(isBoss()){
             if(enemyAircrafts.size()<enemyMaxNumber){
                 enemyAircrafts.add(new BossEnemyFactory().createAircraft(bossHp,bosssX,bosssY,bossNum));
+                if(isIsmusicON()){
+                    bossBgm.start();
+                }
             }
         }
     }

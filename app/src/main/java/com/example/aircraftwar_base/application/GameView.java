@@ -28,7 +28,7 @@ import androidx.annotation.NonNull;
 
 import com.example.aircraftwar_base.R;
 import com.example.aircraftwar_base.activity.MainActivity;
-import com.example.aircraftwar_base.activity.inputActivity;
+import com.example.aircraftwar_base.activity.ScoreActivity;
 import com.example.aircraftwar_base.aircraft.AbstractAircraft;
 import com.example.aircraftwar_base.aircraft.BossEnemy;
 import com.example.aircraftwar_base.aircraft.EliteEnemy;
@@ -74,9 +74,10 @@ public abstract class GameView extends SurfaceView
     protected MediaPlayer bossBgm = MediaPlayer.create(this.getContext(), R.raw.bgm_boss);
     private MediaPlayer bombBgm = MediaPlayer.create(this.getContext(), R.raw.bomb_explosion);
 
+
     //  游戏数据相关
     //  成绩
-    public static int score;
+    private static int score;
     //  飞机集合
     protected final HeroAircraft heroAircraft;
     protected final List<AbstractAircraft> enemyAircrafts;
@@ -534,7 +535,7 @@ public abstract class GameView extends SurfaceView
             Context context = this.getContext();
             Activity activity = (Activity) context;
             activity.finish();
-            Intent intent = new Intent(this.getContext(), inputActivity.class);
+            Intent intent = new Intent(this.getContext(), ScoreActivity.class);
             activity.startActivity(intent);
         }
     }
@@ -555,5 +556,7 @@ public abstract class GameView extends SurfaceView
     public boolean isIsmusicON() {
         return ismusicON;
     }
-
+    public static int getScore() {
+        return score;
+    }
 }

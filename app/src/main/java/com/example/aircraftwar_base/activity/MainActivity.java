@@ -1,30 +1,22 @@
 package com.example.aircraftwar_base.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aircraftwar_base.R;
 import com.example.aircraftwar_base.application.EasyGame;
 import com.example.aircraftwar_base.application.GameView;
-
-import java.io.File;
-
-
-
-import android.app.Activity;
-import android.content.Intent;
 import com.example.aircraftwar_base.application.HardGame;
 import com.example.aircraftwar_base.application.MediumGame;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
         Switch sw = (Switch)findViewById(R.id.switch1);
         //  添加监听
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    isMusic = true;
-                }else{
-                    isMusic = false;
-                }
-                System.out.println("isMusic " + isMusic);
-            }
-        }
+                                          @Override
+                                          public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                              if(isChecked){
+                                                  isMusic = true;
+                                              }else{
+                                                  isMusic = false;
+                                              }
+                                              System.out.println("isMusic " + isMusic);
+                                          }
+                                      }
         );
     }
 
@@ -63,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getScreenHW();
         mGameView = new EasyGame(this);
 
-        choose=1;
+        ScoreActivity.setMode("EASY");
         setContentView(mGameView);
         System.out.println("choose=="+choose);
 
@@ -74,16 +66,17 @@ public class MainActivity extends AppCompatActivity {
     {
         getScreenHW();
         mGameView = new MediumGame(this);
+        ScoreActivity.setMode("MEDIUM");
         setContentView(mGameView);
-        choose=2;
+
     }
 
     public void showHardGameView(View v)
     {
         getScreenHW();
+        ScoreActivity.setMode("HARD");
         mGameView = new HardGame(this);
         setContentView(mGameView);
-        choose=3;
     }
 
     //  获取界面的长、宽

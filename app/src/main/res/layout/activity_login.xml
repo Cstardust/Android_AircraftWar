@@ -24,6 +24,16 @@
           ←   登录       注册
     下面是具体代码
     -->
+    <!--
+     顶部三个东西摆放好之后
+     就该来摆放登录时候的两个文本输入框了
+     用户名
+     密码
+     这个明显的是LinerLayout
+     LinerLayout必须指明orientation 方向 要么垂直vertical 要么水平 horizontal
+     这里显然是垂直vertical
+     -->
+
     <RelativeLayout
         android:id="@+id/rl_loginactivity_top"
         android:layout_width="match_parent"
@@ -34,8 +44,11 @@
             android:id="@+id/iv_loginactivity_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="144dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/ic_left_back"
             android:clickable="true"
             android:onClick="onClick" />
@@ -65,15 +78,7 @@
             android:textColor="#fff"
             android:textSize="20dp" />
     </RelativeLayout>
-    <!--
-     顶部三个东西摆放好之后
-     就该来摆放登录时候的两个文本输入框了
-     用户名
-     密码
-     这个明显的是LinerLayout
-     LinerLayout必须指明orientation 方向 要么垂直vertical 要么水平 horizontal
-     这里显然是垂直vertical
-     -->
+
     <LinearLayout
         android:id="@+id/ll_loginactivity_two"
         android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aircraftwar_base.R;
+import com.example.aircraftwar_base.client.Client;
 import com.example.aircraftwar_base.db.DBOpenHelper;
 import com.example.aircraftwar_base.idcode.Code;
 
@@ -26,7 +27,7 @@ import com.example.aircraftwar_base.idcode.Code;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String realCode;
-    private DBOpenHelper mDBOpenHelper;
+//    private DBOpenHelper mDBOpenHelper;
     private Button mBtRegisteractivityRegister;
     private RelativeLayout mRlRegisteractivityTop;
     private ImageView mIvRegisteractivityBack;
@@ -38,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private ImageView mIvRegisteractivityShowcode;
     private RelativeLayout mRlRegisteractivityBottom;
 
+    private Client client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +48,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         initView();
 
-        mDBOpenHelper = new DBOpenHelper(this);
+//        mDBOpenHelper = new DBOpenHelper(this);
+
+        //  客户端
+        client = LoginActivity.getClient();
 
         //将验证码用图片的形式显示出来
         mIvRegisteractivityShowcode.setImageBitmap(Code.getInstance().createBitmap());
@@ -89,18 +95,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String username = mEtRegisteractivityUsername.getText().toString().trim();
                 String password = mEtRegisteractivityPassword2.getText().toString().trim();
                 String phoneCode = mEtRegisteractivityPhonecodes.getText().toString().toLowerCase();
+                System.out.println("MY_CLIENT  "+username+"="+password+"="+phoneCode);
                 //注册验证
                 if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(phoneCode) ) {
                     if (phoneCode.equals(realCode)) {
                         //  将用户名和密码加入到数据库中
                         //  检测是否重复
-                        if(!mDBOpenHelper.addUser(username, password)){
+                        if(!client.regIn(username,password)){
                             Toast.makeText(this,  "用户名重复，注册失败", Toast.LENGTH_SHORT).show();
                             break;
                         }
+//                        if(!mDBOpenHelper.addUser(username, password)){
+//                            Toast.makeText(this,  "用户名重复，注册失败", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        }
                         //  注册成功
                         ScoreActivity.setThis_user_name(username);
-                        Intent intent2 = new Intent(this, MainActivity.class);
+                        Intent intent2 = new Intent(this, LoginActivity.class);
                         startActivity(intent2);
                         finish();
                         Toast.makeText(this,  "验证通过，注册成功", Toast.LENGTH_SHORT).show();

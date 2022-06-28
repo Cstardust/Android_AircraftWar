@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 //   与数据库交互的DAO层
 //   database中有两个表 一个是密码表User、一个是游戏记录表Record
-//   接口已提供好，请尽量不要改接口
 //   如果你要写排行榜，
 //   那么获取你所需的游戏记录信息的方式是getAllData()；
 //   你在数据库中删除一条记录的方式是deleteRecord
@@ -86,7 +85,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     public void deleteRecord(String name,String date){
-        db.execSQL("DELETE FROM record WHERE name = AND date = " + name + date);
+        db.execSQL("DELETE FROM record WHERE name = " + "'" + name + "'" + " AND date = "+ "'"+date+"'");
     }
 
     public void updatePwd(String name,String password){

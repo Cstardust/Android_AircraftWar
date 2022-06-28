@@ -21,13 +21,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Handler;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
 import com.example.aircraftwar_base.R;
+import com.example.aircraftwar_base.activity.LoginActivity;
 import com.example.aircraftwar_base.activity.MainActivity;
+import com.example.aircraftwar_base.activity.ModeChooseActivity;
+import com.example.aircraftwar_base.activity.OnlineActivity;
 import com.example.aircraftwar_base.activity.ScoreActivity;
 import com.example.aircraftwar_base.aircraft.AbstractAircraft;
 import com.example.aircraftwar_base.aircraft.BossEnemy;
@@ -38,6 +43,7 @@ import com.example.aircraftwar_base.basic.AbstractFlyingObject;
 import com.example.aircraftwar_base.bullet.BaseBullet;
 import com.example.aircraftwar_base.bullet.EnemyBullet;
 import com.example.aircraftwar_base.bullet.HeroBullet;
+import com.example.aircraftwar_base.client.Client;
 import com.example.aircraftwar_base.controller.HeroController;
 import com.example.aircraftwar_base.controller.ImageManager;
 import com.example.aircraftwar_base.reward.AbstractReward;
@@ -60,7 +66,7 @@ public abstract class GameView extends SurfaceView
     private SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  //  绘图的画布
     private Paint mPaint;   //  画笔
-
+    private Client client;
 
     private boolean ismusicON = MainActivity.getIsMusic();
 
@@ -73,6 +79,7 @@ public abstract class GameView extends SurfaceView
     private MediaPlayer getProp = MediaPlayer.create(this.getContext(), R.raw.get_supply);
     protected MediaPlayer bossBgm = MediaPlayer.create(this.getContext(), R.raw.bgm_boss);
     private MediaPlayer bombBgm = MediaPlayer.create(this.getContext(), R.raw.bomb_explosion);
+    private Handler handler = new Handler();
 
 
     //  游戏数据相关
@@ -171,7 +178,7 @@ public abstract class GameView extends SurfaceView
         //  设置鼠标监听
         new HeroController(this,heroAircraft);
 
-
+        client = LoginActivity.getClient();
     }
 
 
@@ -532,11 +539,22 @@ public abstract class GameView extends SurfaceView
             }
             surfaceDestroyed(mSurfaceHolder);
             System.out.println("Game Over!");
-            Context context = this.getContext();
-            Activity activity = (Activity) context;
-            activity.finish();
-            Intent intent = new Intent(this.getContext(), ScoreActivity.class);
-            activity.startActivity(intent);
+            if(!ModeChooseActivity.isIsOnline()){
+                Context context = this.getContext();
+                Activity activity = (Activity) context;
+                activity.finish();
+                Intent intent = new Intent(this.getContext(), ScoreActivity.class);
+                activity.startActivity(intent);
+            }else{
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        client.subRecord(ScoreActivity.getThis_user_name(),Integer.valueOf(GameView.getScore()).toString(),ScoreActivity.getMode());
+                        boolean isEnd = client.subEnd();
+                        showRank();
+                    }
+                }).start();
+            }
         }
     }
 
@@ -558,5 +576,21 @@ public abstract class GameView extends SurfaceView
     }
     public static int getScore() {
         return score;
+    }
+
+
+
+    public void showRank()
+    {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Context context = GameView.this.getContext();
+                Activity activity = (Activity) context;
+                activity.finish();
+                Intent intent = new Intent(GameView.this.getContext(), ScoreActivity.class);
+                activity.startActivity(intent);
+            }
+        });
     }
 }

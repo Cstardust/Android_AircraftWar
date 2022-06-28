@@ -1,6 +1,7 @@
 package com.example.aircraftwar_base.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.example.aircraftwar_base.application.HardGame;
 import com.example.aircraftwar_base.application.MediumGame;
 
 import java.io.File;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static boolean isMusic;     //  游戏是否有音乐
     private static Thread t = null;
     public static File fileDir= null;
-
+    public static String mutex = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,32 +54,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showEasyGameView(View v) {
-        getScreenHW();
-        mGameView = new EasyGame(this);
-
+        //  准备数据
         ScoreActivity.setMode("EASY");
-        setContentView(mGameView);
-        System.out.println("choose=="+choose);
+        getScreenHW();
+        //  切换界面
+        if(ModeChooseActivity.isIsOnline()){
+            Intent intent = new Intent(this, OnlineActivity.class);
+            startActivity(intent);
+            finish();
+        } else{
+            mGameView = new EasyGame(this);
+            setContentView(mGameView);
+//            finish();
+        }
 
     }
 
 
     public void showMediumGameView(View v)
     {
-        getScreenHW();
-        mGameView = new MediumGame(this);
+        //  准备数据
         ScoreActivity.setMode("MEDIUM");
-        setContentView(mGameView);
-
+        getScreenHW();
+        //  切换界面
+        if(ModeChooseActivity.isIsOnline()){
+            Intent intent = new Intent(this, OnlineActivity.class);
+            startActivity(intent);
+            finish();
+        } else{
+            mGameView = new MediumGame(this);
+            setContentView(mGameView);
+//            finish();
+        }
+//        getScreenHW();
+//        mGameView = new MediumGame(this);
+//        ScoreActivity.setMode("MEDIUM");
+//        setContentView(mGameView);
     }
 
     public void showHardGameView(View v)
     {
-        getScreenHW();
+        //  准备数据
         ScoreActivity.setMode("HARD");
-        mGameView = new HardGame(this);
-        setContentView(mGameView);
+        getScreenHW();
+        //  切换界面
+        if(ModeChooseActivity.isIsOnline()){
+            Intent intent = new Intent(this, OnlineActivity.class);
+            startActivity(intent);
+//            finish();
+        } else{
+            mGameView = new HardGame(this);
+            setContentView(mGameView);
+//            finish();
+        }
     }
+//        getScreenHW();
+//        ScoreActivity.setMode("HARD");
+//        mGameView = new HardGame(this);
+//        setContentView(mGameView);
 
     //  获取界面的长、宽
     public void getScreenHW()
@@ -99,4 +133,5 @@ public class MainActivity extends AppCompatActivity {
     public static boolean getIsMusic(){
         return isMusic;
     }
+
 }

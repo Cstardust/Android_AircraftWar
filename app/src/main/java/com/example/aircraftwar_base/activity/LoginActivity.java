@@ -1,7 +1,10 @@
 package com.example.aircraftwar_base.activity;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +17,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aircraftwar_base.R;
+import com.example.aircraftwar_base.client.Client;
 import com.example.aircraftwar_base.db.DBOpenHelper;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * 此类 implements View.OnClickListener 之后，
@@ -35,7 +49,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText mEtLoginactivityPassword;
     private LinearLayout mLlLoginactivityTwo;
     private Button mBtLoginactivityLogin;
-
+    private static Client client;
+    private static boolean flag = false;
     /**
      * 创建 Activity 时先来重写 onCreate() 方法
      * 保存实例状态
@@ -51,10 +66,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        MainActivity.activityList.add(this);
 
         initView();
 
         mDBOpenHelper = new DBOpenHelper(this);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        //  发起连接
+//        new Thread(new NetConn()).start();
+        if(!flag){
+            connect();
+            flag = true;
+        }
+        //  初始化客户端
     }
 
     /**
@@ -103,15 +132,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
              *  finish();//销毁此Activity
              */
             case R.id.bt_loginactivity_login:
+
                 String name = mEtLoginactivityUsername.getText().toString().trim();
                 String password = mEtLoginactivityPassword.getText().toString().trim();
+                System.out.println("MY_CLIENT " + name+password);
+
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
-                    if (password.equals(mDBOpenHelper.getPwd(name))) {
+                    if(client.logIn(name,password)){
+//                    if (password.equals(mDBOpenHelper.getPwd(name))) {
                         ScoreActivity.setThis_user_name(name);
                         Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, MainActivity.class);
+                        Intent intent = new Intent(this, ModeChooseActivity.class);
                         startActivity(intent);
-                        finish();//销毁此Activity
+//                        finish();//销毁此Activity
                     } else {
                         Toast.makeText(this, "用户名或密码不正确，请重新输入", Toast.LENGTH_SHORT).show();
                     }
@@ -121,4 +154,57 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
+    //  xia
+    private static Socket socket;
+    public static PrintWriter writer;
+
+
+    public void connect()
+    {
+        try{
+            System.out.println("MY_CLIENT NETCONN");
+            socket = new Socket();
+            socket.connect(new InetSocketAddress("192.168.43.228",9999));
+//            socket.connect(new InetSocketAddress("10.0.2.2",9999));
+//            socket.connect(new InetSocketAddress("10.250.225.85",9999),5000);
+//            socket.connect(new InetSocketAddress("192.168.56.1",9999));
+            System.out.println("MY_CLIENT " + InetAddress.getLocalHost());
+            writer = new PrintWriter(new BufferedWriter(
+                    new OutputStreamWriter(
+                            socket.getOutputStream(),"UTF-8")),true);
+            System.out.println("MY_CLIENT CONNECTED");
+            client = new Client(socket);
+
+        }catch(UnknownHostException ex){
+            ex.printStackTrace();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+
+
+    //  负责连接
+    protected class NetConn extends Thread{
+        @Override
+        public void run(){
+            try{
+                System.out.println("NETCONN");
+                socket = new Socket();
+                socket.connect(new InetSocketAddress("192.168.43.228",9999));
+                writer = new PrintWriter(new BufferedWriter(
+                        new OutputStreamWriter(
+                                socket.getOutputStream(),"UTF-8")),true);
+                System.out.println("CONNECTED");
+            }catch(UnknownHostException ex){
+                ex.printStackTrace();
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static Socket getSocket(){return socket;}
+    public static Client getClient(){return client;}
 }
